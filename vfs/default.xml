@@ -1,1 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<vfs>
+  <dir name="home" mode="755">
+    <dir name="user" mode="755">
+      <file name="readme.txt" mode="644">SGVsbG8gV29ybGQK</file>
+      <dir name="docs" mode="755">
+        <file name="notes.md" mode="644">IyBOb3Rlcwo=</file>
+      </dir>
+    </dir>
+  </dir>
+  <dir name="etc" mode="755">
+    <file name="hostname" mode="644">bG9jYWxob3N0Cg==</file>
+  </dir>
+</vfs>
 
