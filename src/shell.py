@@ -26,7 +26,13 @@ class Shell:
             "vfs-init": self._cmd_vfs_init,
             "pwd": self._cmd_pwd,
         })
-        
+        from .vfs import VFS
+        self.vfs = VFS()
+        if vfs_path:
+            try:
+                self.vfs.load_xml(vfs_path)
+            except Exception as exc:  # noqa: BLE001
+                self.startup_log.append(f"VFS load error: {exc}")
         if self.debug:
             self._debug_config()
 
