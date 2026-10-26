@@ -1,6 +1,7 @@
-# Startup script for the emulator (commands are shell-lines)
 ls /
-cd /home
+cd /home/user
 ls
-help
+pwd
+ls docs
+vfs-save /tmp/vfs_dump.xml
 exit
