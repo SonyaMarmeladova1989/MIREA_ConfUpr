@@ -21,6 +21,12 @@ class Shell:
             "exit": self._cmd_exit,
             "help": self._cmd_help,
         }
+        self.handlers.update({
+            "vfs-save": self._cmd_vfs_save,
+            "vfs-init": self._cmd_vfs_init,
+            "pwd": self._cmd_pwd,
+        })
+        
         if self.debug:
             self._debug_config()
 
