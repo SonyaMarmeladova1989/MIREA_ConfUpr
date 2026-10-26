@@ -85,7 +85,7 @@ class Shell:
             out = [f"{cmd}: {exc}"]
         return out, self.clear_requested
 
-    def run_script(self, path):
+     def run_script(self, path):
         """Execute every line of the script, skipping bad ones."""
         script_log = []
         try:
@@ -103,3 +103,28 @@ class Shell:
             if not self.running:
                 break
         return script_log
+
+     def _cmd_vfs_save(self, args):
+        """Save VFS to a file."""
+        if not args:
+            return ["vfs-save: missing path"]
+        self.vfs.save_xml(args[0])
+        return [f"saved to {args[0]}"]
+
+    def _cmd_vfs_init(self, args):
+        """Reset VFS to default and drop physical file."""
+        import os
+        from .vfs import VFS
+        self.vfs = VFS()
+        if self.vfs_path and os.path.exists(self.vfs_path):
+            os.remove(self.vfs_path)
+        return ["VFS reset to default"]
+
+    def _cmd_pwd(self, args):
+        """Print current directory."""
+        parts = []
+        node = self.vfs.cwd
+        while node.parent is not None:
+            parts.append(node.name)
+            node = node.parent
+        return ["/" + "/".join(reversed(parts)) if parts else "/"]
