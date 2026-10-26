@@ -1,1 +1,1 @@
-
+"""Shell emulator package."""
