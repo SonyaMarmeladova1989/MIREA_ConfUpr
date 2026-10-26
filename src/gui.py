@@ -23,6 +23,13 @@ class EmulatorGUI:
         self.entry.bind("<Return>", self._on_enter)
         self.entry.focus_set()
         self._write(self.shell.prompt())
+        for ln in self.shell.startup_log:
+            self._write(ln)
+        if self.shell.script_path:
+            for ln in self.shell.run_script(self.shell.script_path):
+                self._write(ln)
+        self._write(self.shell.prompt())
+
 
     def _title(self):
         """Window title based on real OS info."""
