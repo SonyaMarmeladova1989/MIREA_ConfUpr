@@ -20,6 +20,8 @@ class Shell:
             "cd": self._cmd_cd,
             "exit": self._cmd_exit,
             "help": self._cmd_help,
+            "mkdir": self._cmd_mkdir,
+            "chmod": self._cmd_chmod,
         }
         self.handlers.update({
             "vfs-save": self._cmd_vfs_save,
@@ -86,7 +88,20 @@ class Shell:
         lines, words, chars = self.vfs.wc(args[0])
         return [f"{lines} {words} {chars} {args[0]}"]
 
+    def _cmd_mkdir(self, args):
+        """Create a new directory."""
+        if not args:
+            return ["mkdir: missing operand"]
+        for path in args:
+            self.vfs.mkdir(path)
+        return []
 
+    def _cmd_chmod(self, args):
+        """Change file mode (octal)."""
+        if len(args) < 2:
+            return ["chmod: usage: chmod MODE PATH"]
+        self.vfs.chmod(args[1], args[0])
+        return []
 
     def _cmd_exit(self, args):
         """Exit shell."""
