@@ -25,6 +25,9 @@ class Shell:
             "vfs-save": self._cmd_vfs_save,
             "vfs-init": self._cmd_vfs_init,
             "pwd": self._cmd_pwd,
+            "date": self._cmd_date,
+            "clear": self._cmd_clear,
+            "wc": self._cmd_wc,
         })
         from .vfs import VFS
         self.vfs = VFS()
@@ -51,13 +54,39 @@ class Shell:
         host = socket.gethostname()
         return f"{user}@{host}$ "
 
-    def _cmd_ls(self, args):
-        """Stub for ls."""
-        return [f"ls: args={args}"]
+    def _cmd_ls(self, args):
+        """List directory contents."""
+        path = args[0] if args else "."
+        entries = self.vfs.ls(path)
+        if not entries:
+            return []
+        return ["  ".join(entries)]
 
     def _cmd_cd(self, args):
-        """Stub for cd."""
-        return [f"cd: args={args}"]
+        """Change directory."""
+        if not args:
+            return ["cd: missing argument"]
+        self.vfs.cd(args[0])
+        return []
+
+    def _cmd_date(self, args):
+        """Show current date and time."""
+        from datetime import datetime
+        return [datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
+
+    def _cmd_clear(self, args):
+        """Clear the terminal window."""
+        self.clear_requested = True
+        return []
+
+    def _cmd_wc(self, args):
+        """Count lines, words, characters."""
+        if not args:
+            return ["wc: missing argument"]
+        lines, words, chars = self.vfs.wc(args[0])
+        return [f"{lines} {words} {chars} {args[0]}"]
+
+
 
     def _cmd_exit(self, args):
         """Exit shell."""
