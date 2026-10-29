@@ -1,8 +1,18 @@
 ls /
-cd /home/user
+mkdir /tmp
+cd /tmp
 ls
-date
+mkdir nested
+cd nested
+mkdir deep
+ls
+chmod 700 deep
+cd ..
+pwd
+ls
 wc /home/user/readme.txt
-clear
+date
+vfs-save /tmp/vfs_dump.xml
+vfs-init
 ls /
 exit
